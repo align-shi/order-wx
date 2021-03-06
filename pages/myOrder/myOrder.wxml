@@ -1,0 +1,47 @@
+<block wx:if="{{null==products||products.length==0}}">
+  <view class="empty_tip">
+    <image style="height:100rpx;width:100rpx" src="/images/empty_order.png"></image>
+    <view style="font-size:14px;">您还没有下单</view>
+  </view>
+</block>
+<block wx:else>
+  <view class="order_title">
+    <view class="order_title_deskInfo">
+      <text style="font-size:18px;font-weight:600">桌号：{{deskId}}</text>
+    </view>
+  </view>
+  <view class="order_baseInfo">
+    <view class="order_subTitle">基本信息</view>
+    <view class="line"></view>
+    <view class="table">
+      <view class="tr">
+        <view class="th" style="align-self:left">人数</view>
+        <view class="th">下单时间</view>
+        <view class="th ">餐品数量</view>
+      </view>
+      <view class="tr">
+        <view class="td">2人</view>
+        <view class="td">12:03</view>
+        <view class="td">4份</view>
+      </view>
+    </view>
+  </view>
+  <view class="order_detail">
+    <view class="order_subTitle">菜品详情</view>
+    <view class="line"></view>
+    <view class="table">
+      <block wx:for="{{products}}" wx:key="{{item.id}}">
+        <view class="tr">
+          <view class="th">{{item.name}}</view>
+          <view class="th">x{{item.num}}</view>
+          <view class="th">￥{{item.realPrice}}</view>
+          <view class="th">已下厨</view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="order_operation">
+    <button type="primary" class="order_operation_btn" bindtap='toIndex'>加菜</button>
+    <button type="primary" class="order_operation_btn">立即买单</button>
+  </view>
+</block>

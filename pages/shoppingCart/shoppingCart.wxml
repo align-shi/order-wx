@@ -1,0 +1,62 @@
+<block wx:if="{{carts.length==0}}">
+  <view class="empty_tip ">
+    <image style="height:100rpx;width:100rpx" src="/images/empty_shoppingCart.png"></image>
+    <view style="font-size:14px;">购物车竟然是空的</view>
+    <view style="font-size:12px;font-weight:600;">这不科学呀！</view>
+  </view>
+</block>
+<block wx:else>
+  <view class="cart_title">
+    <view style="text-align:center;">
+      <text style="">桌号：{{deskId}}</text>
+    </view>
+    <view style="text-align:center;">
+      <text style="font-size:16px;color:#939393">已点份{{productNumber}}餐品</text>
+    </view>
+  </view>
+  <view style="padding-bottom:110px">
+    <block wx:for="{{carts}}">
+      <view class="cart_item" id="{{item.id}}" bindtap="navigateToDetail">
+        <view class="cart_item_selected">
+          <image wx:if="{{item.selected}}" catchtap="selectOperation" src="/images/yes.png" data-id="{{item.id}}"></image>
+          <image wx:else src="/images/no.png" catchtap="selectOperation" data-id="{{item.id}}"></image>
+        </view>
+        <view class='cart_item_image'>
+          <image src="{{basePath+item.imageUrl}}"></image>
+        </view>
+        <view class="cart_item_detail">
+          <view style="display:inline;font-size:18px;font-weight:700">{{item.name}}</view>
+          <view style='margin-left:5px;'>
+            <text style="font-size:12px;text-decoration:line-through">￥{{item.price}}</text>
+          </view>
+          <view style="float:left;">
+            <text style="color:red;font-weight:bold;font-size:18px;">￥{{item.realPrice}}</text>
+          </view>
+          <view class='cart_item_handle'>
+            <view wx:if="{{item.stauts !=2}}" catchtap='addOne' data-id="{{item.id}}">
+              <image src='/images/add.png'></image>
+            </view>
+            <view style="{{!item.num?'visibility:hidden':'visibility:visible'}}">
+              <text class="cart_item_number">{{item.num}}</text>
+            </view>
+            <view catchtap='reduceOne' data-id="{{item.id}}" style="{{!item.num?'visibility:hidden':'visibility:visible'}}">
+              <image src='/images/reduce.png'></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="cart_bottom">
+    <view class="cart_item_selected">
+      <image wx:if="{{allSelected}}" bindtap="allSelectOperation" src="/images/yes.png" data-id="{{item.id}}"></image>
+      <image wx:else src="/images/no.png" bindtap="allSelectOperation" data-id="{{item.id}}"></image>
+    </view>
+    <view class="cart_bottom_ccount">
+      <text>总计金额：￥{{total}}</text>
+    </view>
+    <view class="cart_bottom_operation">
+      <button type="primary" bindtap="placeOrder">去下单</button>
+    </view>
+  </view>
+</block>

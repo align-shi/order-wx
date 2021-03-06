@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/myOrder/myOrder",
+    "pages/shoppingCart/shoppingCart",
+    "pages/detail/detail",
+    "pages/myInfo/myInfo"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#D53C3E",
+    "navigationBarTitleText": "自助点餐系统",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/images/bar/index-0.png",
+        "selectedIconPath": "/images/bar/index-1.png"
+      },
+      {
+        "pagePath": "pages/shoppingCart/shoppingCart",
+        "text": "购物车",
+        "iconPath": "/images/bar/shoppingcart-0.png",
+        "selectedIconPath": "/images/bar/shoppingcart-1.png"
+      },
+      {
+        "pagePath": "pages/myOrder/myOrder",
+        "text": "我的订单",
+        "iconPath": "/images/bar/order-0.png",
+        "selectedIconPath": "/images/bar/order-1.png"
+      },
+      {
+        "pagePath": "pages/myInfo/myInfo",
+        "text": "我",
+        "iconPath": "/images/bar/me-0.jpg",
+        "selectedIconPath": "/images/bar/me-1.jpg"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "debug": true
+}

@@ -1,0 +1,50 @@
+<view class="detail_title">
+  <text>{{product.type_name}}，{{product.name}}</text>
+</view>
+<view class="detail_image">
+  <block wx:if="{{otherImageUrls.length!=0}}">
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{otherImageUrls}}" wx:key="imageUrlsId">
+        <swiper-item>
+          <image src="{{item}}" style="width:100%" mode="widthFix" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </block>
+  <block wx:else>
+    <image src="{{basePath+product.imageUrl}}" style="width:100%" mode="widthFix" />
+  </block>
+</view>
+<view class="detail_trait">
+  <text style="font-weight:bold">菜品特色：</text>
+  <text>{{product.trait}}</text>
+</view>
+<view class="detail_price">
+  <view class="detail_price_text">
+    <view style='margin:5px 5px 5px 10px;font-size:14px'>菜品销售量：{{product.salesVolume}}份</view>
+    <view style='margin-left:10px;'>
+      <text style="font-size:12px;text-decoration:line-through">原价：￥{{product.price}}</text>
+    </view>
+    <view style='margin:5px 5px 5px 10px'>
+      <text style="font-weight:bold;font-size:18px;">让利价：</text>
+      <text style="color:red;font-weight:bold;font-size:18px;">￥{{product.realPrice}}</text>
+    </view>
+    <view style='margin:5px 5px 5px 10px'>
+      <block wx:for="{{product.good}}" wx:key="*this">
+        <image class="fivestarts" src="/images/fivestars_yes.png"></image>
+      </block>
+      <block wx:if="{{product.good<5}}">
+        <block wx:for="{{5-product.good}}">
+          <image class="fivestarts" src="/images/fivestars_no.png"></image>
+        </block>
+      </block>
+    </view>
+  </view>
+  <view class="detail_price_image">
+    <image src="/images/1号桌.png"></image>
+  </view>
+</view>
+<view class="detail_detail">
+  <view class="detail_detail_title">菜品详情</view>
+  <view>{{product.detail}}</view>
+</view>

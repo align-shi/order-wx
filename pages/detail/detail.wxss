@@ -1,0 +1,46 @@
+.detail_title{
+  height:40px;
+  margin:2px 0;
+  text-align: center;
+}
+.detail_title>text{
+  line-height: 40px;
+  font-weight: 700;
+}
+.detail_trait{
+  height: 30px;
+  margin:5px 0;
+  text-align: center;
+}
+.detail_price{
+  display: flex;
+  direction: row;
+  background-color:aliceblue;
+}
+.detail_price_text{
+  order:0;
+  flex-grow: 1;
+}
+.detail_price{
+  margin-top:20px;
+  margin-right:10px;
+  order:1;
+}
+.detail_price_image>image{
+  width:250rpx;
+  height:250rpx;
+}
+.fivestarts{
+  height:20px;
+  width:20px;
+  margin-right:2px;
+}
+.detail_detail{
+  font-size:14px;
+  margin:10px 10px;
+}
+.detail_detail_title{
+  font-size:18px;
+  font-weight: bold;
+  margin-bottom:10px;
+}

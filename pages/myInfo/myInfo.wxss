@@ -1,0 +1,109 @@
+.bg {
+  height: 150px;
+  background-color: #d53e37;
+}
+ 
+.head {
+  display: flex;
+  flex-direction: column;
+}
+ 
+.headIcon {
+  display: flex;
+  justify-content: center;
+}
+ 
+.login {
+  display: flex;
+  color: #fff;
+  font-size: 15px;
+  margin-top: 15rpx;
+  justify-content: center;
+}
+ 
+.button {
+  margin: 10px;
+  font-size: 14px;
+}
+ 
+.head image {
+  border-radius: 50%;
+}
+ 
+.hr {
+  width: 100%;
+  height: 15px;
+  background-color: #f4f5f6;
+}
+ 
+.item {
+  display: flex;
+  flex-direction: row;
+}
+ 
+.title {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  font-size: 15px;
+}
+ 
+.detail2 {
+  font-size: 15px;
+  position: absolute;
+  right: 10px;
+  height: 50px;
+  line-height: 50px;
+  color: #888;
+}
+ 
+.line {
+  border: 1px solid #ccc;
+  opacity: 0.2;
+}
+
+
+.list-wrapper {
+  width: 100%;
+}
+
+/* 横着的分割View样式 */
+/*分割线样式*/
+.div-line{
+  background: #E0E3DA;
+  width: 100%;
+  height: 3rpx;
+}
+
+.list-item {
+  width: 100%;
+  height: 120rpx;
+}
+
+.list-item_active {
+  background-color: #E0E3DA;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 120rpx;
+}
+.item-text {
+  position: fixed;
+  left: 100rpx;
+  font-size: 38rpx;
+}
+.item-array {
+  position: fixed;
+  right: 50rpx;
+  font-size: 38rpx;
+}
+
+.item-image {
+  position: fixed;
+  left: 50rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
