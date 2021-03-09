@@ -6,6 +6,7 @@
     "pages/shoppingCart/shoppingCart",
     "pages/detail/detail",
     "pages/myInfo/myInfo"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",

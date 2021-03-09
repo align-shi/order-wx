@@ -58,4 +58,86 @@
       </view>
     </view>
   </block>
+
+  <!-- 购物车-弹出层 -->
+
+<!-- 黑背景模态墙 -->
+<view 
+wx:if="{{HZL_isCat > 0}}"
+class="HZL_cat_bottom"
+bindtap="HZL_isCat_close"></view>
+
+
+<view
+wx:if="{{HZL_isCat > 0}}"
+class="HZL_cat_bottom1"
+>
+
+<!-- 卡片(包含左右两个按钮) -->
+<view class="HZL_cat_bottom1_view">
+    <view style="margin-left: 30rpx;">购物车</view>
+    <view style="margin-right: 30rpx;" bindtap="HZL_zero">清空</view>
+</view>
+
+<!-- 卡片(包含用户选择的所有商品信息) -->
+<scroll-view 
+class="HZL_cat_scroll" 
+scroll-y="true"
+>
+
+    <view 
+    class="HZL_cat_scrollView"
+    wx:for="{{carts}}" 
+    wx:key="HZL_my_cat">
+    
+    <view class="HZL_cat_scrollView_text">
+    {{item.name}}
+    </view>
+
+    <view class="HZL_cat_scrollView_view">
+        
+        <view
+        wx:if="{{productNumber == 0}}"
+        class="HZL_num"></view>
+
+            <view wx:if="{{item.num == 0}}"
+            class="HZL_num"></view>
+            
+            <view wx:if="{{item.num > 0}}"
+            class="HZL_jian" 
+            bindtap="HZL_jian1"
+            data-parentIndex="{{item.parentIndex}}"
+            data-id="{{item.id}}">-</view>
+
+            <view wx:if="{{item.num > 0}}"
+            class="HZL_num">{{item.num}}</view>
+
+            <view class="HZL_jia"
+            bindtap="HZL_jia1"
+            data-parentIndex="{{item.parentIndex}}"
+            data-id="{{item.id}}">+</view>
+            </view>
+
+        </view>
+    </scroll-view>
+</view>
+
+  <!-- 底部固定购物车 -->
+<view class="HZL_cat">
+
+<view 
+class="HZL_cat_img_view"
+bindtap="HZL_isCat">
+<image src="../../images/shop-cat-on1.png"
+class="HZL_cat_img"></image>
+
+<view 
+class="HZL_cat_num"
+wx:if="{{productNumber > 0}}">
+{{productNumber}}
+</view>
+
+</view>
+<view class="HZL_cat_text" bindtap="go">去结算</view>
+</view>
 </view>

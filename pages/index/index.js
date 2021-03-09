@@ -3,6 +3,10 @@ let util = require("../../utils/util.js");
 let  _self;
 Page({
     data: {
+      // 是否显示下面的购物车
+      HZL_isCat: 0,
+      productNumber: 0,
+      total: 0,             //购物车中的总金额
       deskId: app.globalData.deskId,
       basePath: app.globalData.api,
       imageUrls: ["/images/index/haibao-1.jpg", "/images/index/haibao-2.jpg",
@@ -106,8 +110,9 @@ Page({
   addCart:function(e){
     let currentId = e.currentTarget.id;
     let cartCurrentProduct;
+    let shoppingCarts = this.data.carts;
     if (_self.data.carts!=null){
-      cartCurrentProduct = _self.data.carts.find(elem => elem.id == currentId);
+      cartCurrentProduct = shoppingCarts.find(elem => elem.id == currentId);
     }
     if (cartCurrentProduct != undefined){
       cartCurrentProduct.num++;
@@ -115,9 +120,56 @@ Page({
       util.httpJson("wx/api/v1/product/" + currentId, result => {
         let product=result.data;
         product.num=1;
-        _self.data.carts.push(product);
+        shoppingCarts.push(product);
       }, "GET");
     }
-    app.globalData.carts = _self.data.carts;
+    app.globalData.carts = shoppingCarts;
+    let productNum = this.data.productNumber +1;
+  
+    this.setData({productNumber: productNum });
+    
+  },
+  HZL_isCat:function(e){
+    var that = this;
+    this.setData({ "carts": app.globalData.carts });
+    if (that.data.HZL_isCat == 0 && that.data.carts.length > 0) {
+      that.setData({
+        HZL_isCat: 1
+      })
+    } else if (that.data.HZL_isCat == 1 && that.data.carts.length > 0) {
+      that.setData({
+        HZL_isCat: 0
+      })
+    }
+  },
+  /**
+   * 下面购物车减少按钮
+   */
+  HZL_jian1: function (e){
+    let currentId = e.currentTarget.dataset.id;
+    let shoppingCarts = this.data.carts;
+    let currentProduct = shoppingCarts.find(elem => elem.id == currentId);
+    console.log(currentProduct);
+    if (currentProduct.num == 1) {
+      console.log(shoppingCarts);
+      shoppingCarts.splice(shoppingCarts.findIndex(elem => currentProduct.id == elem.id), 1);
+    } else {
+      currentProduct.num = --currentProduct.num;
+    }
+    let productNum = this.data.productNumber;
+    if(productNum == 1){
+      this.setData({
+        carts:shoppingCarts,HZL_isCat:0,productNumber:productNum -1
+      })
+    }else{
+      this.setData({carts:shoppingCarts,productNumber:productNum -1})
+    }
+    
+  },
+  /**
+   * 下面购物车增加按钮
+   */
+  HZL_jia1: function (e){
+
   }
 })
