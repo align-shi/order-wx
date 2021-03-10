@@ -121,13 +121,22 @@ Page({
         let product=result.data;
         product.num=1;
         shoppingCarts.push(product);
+        app.globalData.carts = shoppingCarts;
+        this.computeOperation();
       }, "GET");
     }
-    app.globalData.carts = shoppingCarts;
     let productNum = this.data.productNumber +1;
-  
-    this.setData({productNumber: productNum });
-    
+    this.setData({productNumber: productNum,carts: shoppingCarts});
+  },
+  computeOperation: function () {
+    let shoppingCarts = this.data.carts;
+    let count = 0;
+    shoppingCarts.forEach(elem => {
+      console.log(elem);
+      let temp = elem.realPrice * elem.num;
+      count = count + temp;
+    });
+    this.setData({ total: count, carts: shoppingCarts });
   },
   HZL_isCat:function(e){
     var that = this;
@@ -151,7 +160,6 @@ Page({
     let currentProduct = shoppingCarts.find(elem => elem.id == currentId);
     console.log(currentProduct);
     if (currentProduct.num == 1) {
-      console.log(shoppingCarts);
       shoppingCarts.splice(shoppingCarts.findIndex(elem => currentProduct.id == elem.id), 1);
     } else {
       currentProduct.num = --currentProduct.num;
@@ -164,12 +172,20 @@ Page({
     }else{
       this.setData({carts:shoppingCarts,productNumber:productNum -1})
     }
-    
+    this.computeOperation();
   },
   /**
    * 下面购物车增加按钮
    */
   HZL_jia1: function (e){
-
+    let currentId = e.currentTarget.dataset.id;
+    let shoppingCarts = this.data.carts;
+    let currentProduct = shoppingCarts.find(elem => elem.id == currentId);
+    currentProduct.num = ++currentProduct.num;
+    let productNum = this.data.productNumber;
+    this.setData({
+      carts:shoppingCarts,productNumber:productNum+1
+    })
+    this.computeOperation();
   }
 })

@@ -196,9 +196,20 @@ slide-image {
     border: 1rpx solid rgba(50, 50, 50, 0.3);
   
   }
-  
+  .HZL_cat_price{
+    margin-left: 180rpx;
+    width: 220rpx;
+    height: 50px;
+    /* background-color: #e64340; */
+    font-size: 30rpx;
+    color: white;
+    display: flex;
+    justify-content:center;
+    align-items:Center;
+  }
+
   .HZL_cat_text{
-    margin-left: 580rpx;
+    margin-left: 280rpx;
     width: 180rpx;
     height: 50px;
     background-color: #e64340;

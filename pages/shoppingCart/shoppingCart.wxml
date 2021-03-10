@@ -27,10 +27,10 @@
         <view class="cart_item_detail">
           <view style="display:inline;font-size:18px;font-weight:700">{{item.name}}</view>
           <view style='margin-left:5px;'>
-            <text style="font-size:12px;text-decoration:line-through">￥{{item.price}}</text>
+            <text style="font-size:12px;text-decoration:line-through">￥{{item.realPrice}}</text>
           </view>
           <view style="float:left;">
-            <text style="color:red;font-weight:bold;font-size:18px;">￥{{item.realPrice}}</text>
+            <text style="color:red;font-weight:bold;font-size:18px;">￥{{item.price}}</text>
           </view>
           <view class='cart_item_handle'>
             <view wx:if="{{item.stauts !=2}}" catchtap='addOne' data-id="{{item.id}}">

@@ -45,10 +45,10 @@
                 <text style="display:inline;font-size:18px;font-weight:700">{{item.name}}</text>
                 <view style='margin:5px 5px;;float:right;font-size:14px'>已售：{{item.salesVolume}}</view>
                 <view style='margin-left:5px;'>
-                  <text style="font-size:12px;text-decoration:line-through">￥{{item.price}}</text>
+                  <text style="font-size:12px;text-decoration:line-through">￥{{item.realPrice}}</text>
                 </view>
                 <view style="float:left;">
-                  <text style="color:red;font-weight:bold;font-size:18px;">￥{{item.realPrice}}</text>
+                  <text style="color:red;font-weight:bold;font-size:18px;">￥{{item.price}}</text>
                 </view>
                 <button type="button" id="{{item.id}}" catchtap="addCart">加入购物车</button>
               </view>
@@ -137,6 +137,10 @@ wx:if="{{productNumber > 0}}">
 {{productNumber}}
 </view>
 
+</view>
+<!-- 价格布局 -->
+<view class="HZL_cat_price">
+{{total}}
 </view>
 <view class="HZL_cat_text" bindtap="go">去结算</view>
 </view>
