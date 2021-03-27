@@ -37,6 +37,7 @@ App({
         userInfo: null,
         api: 'http://127.0.0.1:8080/',
         carts:[],
-        deskId:'1'
+        deskId:'1',
+        orderId:''
     }
 })

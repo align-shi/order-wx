@@ -1,8 +1,8 @@
-<!-- <view class='show-author' style='display:{{ismask}}'>
+<view class='show-author' style='display:{{ismask}}'>
     <view class='show-author-title'>
       <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" bindtap='closeHide'>授权登录</button>
     </view>
-  </view> -->
+  </view>
 <view>
   <block wx:if="{{deskId=='0'}}">
     <view class="container">
@@ -142,6 +142,6 @@ wx:if="{{productNumber > 0}}">
 <view class="HZL_cat_price">
 {{total}}
 </view>
-<view class="HZL_cat_text" bindtap="go">去结算</view>
+<view class="HZL_cat_text" bindtap="placeOrder">去结算</view>
 </view>
 </view>

@@ -1,6 +1,3 @@
-<loading hidden="{{loadingHidden}}">
- 微信支付中...
-</loading>
 <block wx:if="{{null==products||products.length==0}}">
   <view class="empty_tip">
     <image style="height:100rpx;width:100rpx" src="/images/empty_order.png"></image>
@@ -44,14 +41,6 @@
         </view>
       </block>
     </view>
-    <button wx:if="{{orderInfo.pay_status == 0}}" type="primary"  bindtap="toPay">立即买单</button>
-    <button wx:if="{{orderInfo.pay_status == 2}}" type="primary"  bindtap="toHistory">重新下单</button>
   </view>
-  <view wx:if="{{orderInfo.pay_status == 0}}" class="order_operation">
-    <button type="primary" class="order_operation_btn" bindtap='toIndex'>加菜</button>
-    <button type="primary" class="order_operation_btn" bindtap="toCancle">取消订单</button>
-  </view>
-  <view wx:if="{{orderInfo.pay_status == 1}}" class="order_operation">
-    <button type="primary" class="order_operation_btn" bindtap='toIndex'>查看历史订单</button>
-  </view>
+
 </block>

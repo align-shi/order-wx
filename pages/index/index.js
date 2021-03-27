@@ -4,6 +4,7 @@ let  _self;
 Page({
     data: {
       // 是否显示下面的购物车
+      winHeight: 0,
       HZL_isCat: 0,
       productNumber: 0,
       total: 0,             //购物车中的总金额
@@ -21,33 +22,46 @@ Page({
       carts:[],
       curNav: 0,
       curIndex: 0,
-      defaultImage:"img/no_image.png"
+      defaultImage:"img/no_image.png",
+      userInfo:{},
     },
     onLoad: function() {
       _self = this;
-      // wx.getSetting({
-      //   success: res => {
-      //     if (res.authSetting['scope.userInfo']) {
-      //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-      //       wx.getUserInfo({
-      //         success: res => {
-      //           //将用户信息设置缓存
-      //           console.log(res),
-      //           wx.setStorageSync('userName', res.userInfo.nickName),
-      //           wx.setStorageSync('iconPath', res.userInfo.avatarUrl),
-      //           wx.setStorageSync('signature', res.userInfo.signature),
-      //           this.setData({
-      //             ismask: 'none'
-      //           });
-      //         }
-      //       })
-      //     }else{
-      //       this.setData({
-      //         ismask: 'block'
-      //       });
-      //     }
-      //   }
-      // });
+      wx.getSystemInfo({
+        success: function(res) {
+          _self.setData({
+            winHeight: res.windowHeight - 200
+          });
+        }
+      });
+      wx.getSetting({
+        success: res => {
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            wx.getUserInfo({
+              success: res => {
+                //将用户信息设置缓存
+                wx.setStorageSync('userName', res.userInfo.nickName),
+                wx.setStorageSync('iconPath', res.userInfo.avatarUrl),
+                wx.setStorageSync('signature', res.userInfo.signature),
+                this.setData({
+                  ismask: 'none'
+                });
+              }
+            })
+          }else{
+            this.setData({
+              ismask: 'block'
+            });
+          }
+        }
+      });
+    },
+    closeHide:function(){
+      this.setData({
+        ismask: 'none'
+      });
+      this.onLoad();
     },
     onShow: function() {
       let _self = this;
@@ -61,6 +75,11 @@ Page({
             productItems: result.data
         });
       }, "GET");
+      if (app.globalData.carts.length == 0){
+        _self.setData({
+          productNumber: 0,total:0,carts:app.globalData.carts
+      });
+      }
       app.globalData.deskId = this.data.deskId;
     },
     errorHandler:function(e){
@@ -116,6 +135,7 @@ Page({
     }
     if (cartCurrentProduct != undefined){
       cartCurrentProduct.num++;
+      this.computeOperation();
     }else{
       util.httpJson("wx/api/v1/product/" + currentId, result => {
         let product=result.data;
@@ -187,5 +207,55 @@ Page({
       carts:shoppingCarts,productNumber:productNum+1
     })
     this.computeOperation();
-  }
+  },
+  HZL_zero: function (){
+    app.globalData.carts = [];
+    this.setData({
+      carts:[],productNumber:0,total:0,HZL_isCat:0
+    })
+  },
+  placeOrder: function () {
+    if (this.data.productNumber != 0) {
+      const serialNumber = util.getSerialNumber();
+      let ods = [];
+      this.data.carts.forEach(elem => {
+        ods.push(elem.id);
+      });
+      let username = app.globalData.userInfo.nickName;
+      util.httpJsonPost("wx/api/v1/order", {
+        'deskId': _self.data.deskId,
+        'serialNumber': serialNumber,
+        'orderAmount': _self.data.total,
+        'createTime': util.formatTime(new Date),
+        'tradeStatus': '0',
+        'payStatus': '0',
+        'ids': ods,
+        'shoppingCart': _self.data.carts,
+        username:username
+      },resp=>{
+        if (resp.data.result == "ok") {
+          app.globalData.orderId = resp.data.orderId;
+          wx.switchTab({
+            url: '/pages/myOrder/myOrder',
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: '下单失败，请重试！',
+          })
+        }
+      });
+    } else {
+      wx.showModal({
+        title: '温馨提示',
+        content: '没有选择任何菜品',
+        success: function (res) {
+          if (res.confirm) {
+          } else {
+          }
+        }
+      })
+    }
+
+  },
 })

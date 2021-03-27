@@ -10,7 +10,7 @@ Page({
     userInfo:{},
     menuitems: [
       { text: '个人信息', url: '../../images/bar/me-1.jpg', icon: '../../images/bar/me-1.jpg', tips: '' },
-      { text: '历史订单', url: '../myOrder/myOrder', icon: '../../images/bar/me-1.jpg', tips: '' },
+      { text: '历史订单', url: '/pages/orderHistory/orderHistory', icon: '../../images/bar/me-1.jpg', tips: '' },
       { text: '评价管理', url: '../../images/bar/me-1.jpg', icon: '../../images/bar/me-1.jpg', tips: '' },
       { text: '意见反馈', url: '../../images/bar/me-1.jpg', icon: '../../images/bar/me-1.jpg', tips: '' }
     ]

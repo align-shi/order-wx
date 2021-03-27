@@ -5,8 +5,9 @@
     "pages/myOrder/myOrder",
     "pages/shoppingCart/shoppingCart",
     "pages/detail/detail",
-    "pages/myInfo/myInfo"
-    
+    "pages/myInfo/myInfo",
+    "pages/orderHistory/orderHistory",
+    "pages/orderDetail/orderDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",
