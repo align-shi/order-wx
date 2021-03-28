@@ -7,7 +7,10 @@
     "pages/detail/detail",
     "pages/myInfo/myInfo",
     "pages/orderHistory/orderHistory",
-    "pages/orderDetail/orderDetail"
+    "pages/orderDetail/orderDetail",
+    "pages/userInfo/userInfo",
+    "pages/setting/setting",
+    "pages/feedback/feedback"
   ],
   "window": {
     "backgroundTextStyle": "light",

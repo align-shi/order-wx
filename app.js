@@ -38,6 +38,7 @@ App({
         api: 'http://127.0.0.1:8080/',
         carts:[],
         deskId:'1',
-        orderId:''
+        orderId:'',
+        vip:0
     }
 })

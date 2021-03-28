@@ -1,9 +1,26 @@
-<view class='show-author' style='display:{{ismask}}'>
+<!-- <view class='show-author' style='display:{{ismask}}'>
     <view class='show-author-title'>
       <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" bindtap='closeHide'>授权登录</button>
     </view>
-  </view>
-<view>
+  </view> -->
+  <view wx:if="{{ismask}}">
+    <view wx:if="{{canIUse}}" >
+        <view class='header'>
+            <image src='/images/wx_login.png'></image>
+        </view>
+ 
+        <view class='content'>
+            <view>申请获取以下权限</view>
+            <text>获得你的公开信息(昵称，头像等)</text>
+        </view>
+ 
+        <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+            授权登录
+        </button>
+    </view>
+    <view wx:else>请升级微信版本</view>
+</view>
+<view wx:if="{{ismask == false}}">
   <block wx:if="{{deskId=='0'}}">
     <view class="container">
       <image src="/images/scanCode.png" bindtap="scanCode" style="width:230rpx;height:200rpx" />
@@ -44,11 +61,18 @@
               <view class="nav_right_item_detail">
                 <text style="display:inline;font-size:18px;font-weight:700">{{item.name}}</text>
                 <view style='margin:5px 5px;;float:right;font-size:14px'>已售：{{item.salesVolume}}</view>
-                <view style='margin-left:5px;'>
+                <view wx:if="{{vip ==1}}" style='margin-left:5px;'>
                   <text style="font-size:12px;text-decoration:line-through">￥{{item.realPrice}}</text>
                 </view>
-                <view style="float:left;">
+                <view wx:if="{{vip ==1}}" style="float:left;">
                   <text style="color:red;font-weight:bold;font-size:18px;">￥{{item.price}}</text>
+                </view>
+
+                <view wx:if="{{vip ==0}}" style='margin-left:5px;'>
+                  <text style="font-size:12px;text-decoration:line-through"></text>
+                </view>
+                <view wx:if="{{vip ==0}}" style="float:left;">
+                  <text style="color:red;font-weight:bold;font-size:18px;">￥{{item.realPrice}}</text>
                 </view>
                 <button type="button" id="{{item.id}}" catchtap="addCart">加入购物车</button>
               </view>

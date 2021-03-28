@@ -1,8 +1,10 @@
 const app = getApp();
 let util = require("../../utils/util.js");
-let  _self;
+let  _self = this;
 Page({
     data: {
+      //判断小程序的API，回调，参数，组件等是否在当前版本可用。
+      canIUse: wx.canIUse('button.open-type.getUserInfo'),
       // 是否显示下面的购物车
       winHeight: 0,
       HZL_isCat: 0,
@@ -24,9 +26,11 @@ Page({
       curIndex: 0,
       defaultImage:"img/no_image.png",
       userInfo:{},
+      ismask:true,
+      vip:0
     },
     onLoad: function() {
-      _self = this;
+      let _self = this;
       wx.getSystemInfo({
         success: function(res) {
           _self.setData({
@@ -37,26 +41,109 @@ Page({
       wx.getSetting({
         success: res => {
           if (res.authSetting['scope.userInfo']) {
-            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
             wx.getUserInfo({
-              success: res => {
-                //将用户信息设置缓存
-                wx.setStorageSync('userName', res.userInfo.nickName),
-                wx.setStorageSync('iconPath', res.userInfo.avatarUrl),
-                wx.setStorageSync('signature', res.userInfo.signature),
-                this.setData({
-                  ismask: 'none'
+              success:res =>{
+                util.httpJson("user/info/"+res.userInfo.nickName, result => {
+                  let resp = result.data;
+                  if (resp.code == 0) {
+                    if(resp.data != null){
+                      app.globalData.vip = resp.data.vip;
+                      _self.setData({
+                        vip :resp.data.vip
+                      });
+                    }else{
+                      app.globalData.vip = 0;
+                      _self.setData({
+                        vip :0
+                      });
+                    }
+                  }
                 });
               }
             })
+            this.setData({
+              ismask: false
+            });
           }else{
             this.setData({
-              ismask: 'block'
+              ismask: 'true'
             });
           }
         }
       });
     },
+    showSettingToast: function(e) {
+      wx.showModal({
+        title: '提示！',
+        confirmText: '去设置',
+        showCancel: false,
+        content: e,
+        success: function(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '../setting/setting',
+            })
+          }
+        }
+      })
+    },
+    bindGetUserInfo: function(e) {
+      let _selt = this;
+      if (e.detail.userInfo) {
+          //用户按了允许授权按钮
+          var that = this;
+          // 获取到用户的信息了，打印到控制台上看下
+          //授权成功后,通过改变 isHide 的值，让实现页面显示出来，把授权页面隐藏起来
+          let user = e.detail.userInfo;
+          app.globalData.userInfo = user;
+          //查询用户信息
+          util.httpJson("user/info/"+user.nickName, result => {
+            let resp = result.data;
+            if (resp.code == 0) {
+              if(resp.data != null){
+                _selt.setData({
+                  vip :resp.data.vip
+                });
+                app.globalData.vip = resp.data.vip;
+              }else{
+                //第一次登陆 保存信息
+                //保存用户信息
+              util.httpJsonPost("user/save",user ,resp=>{
+                let result = resp.data;
+
+                if (result.code == 0) {
+                console.log("保存成功")
+                } else {
+                  console.log("保存失败")
+                }
+              });
+              _selt.setData({
+                vip :0
+              });
+            }
+          } 
+          }, "GET");
+          
+          console.log(e.detail.userInfo);
+          that.setData({
+            ismask: false
+          });
+      } else {
+          //用户按了拒绝按钮
+          wx.showModal({
+              title: '警告',
+              content: '您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
+              showCancel: false,
+              confirmText: '返回授权',
+              success: function(res) {
+                  // 用户没有授权成功，不需要改变 isHide 的值
+                  if (res.confirm) {
+                      console.log('用户点击了“返回授权”');
+                  }
+              }
+          });
+      }
+  },
     closeHide:function(){
       this.setData({
         ismask: 'none'
@@ -130,7 +217,7 @@ Page({
     let currentId = e.currentTarget.id;
     let cartCurrentProduct;
     let shoppingCarts = this.data.carts;
-    if (_self.data.carts!=null){
+    if (shoppingCarts!=null){
       cartCurrentProduct = shoppingCarts.find(elem => elem.id == currentId);
     }
     if (cartCurrentProduct != undefined){
@@ -153,7 +240,12 @@ Page({
     let count = 0;
     shoppingCarts.forEach(elem => {
       console.log(elem);
-      let temp = elem.realPrice * elem.num;
+      let temp = 0;
+      if(this.data.vip == 0){
+        temp = elem.realPrice * elem.num;
+      }else{
+        temp = elem.price * elem.num;
+      }
       count = count + temp;
     });
     this.setData({ total: count, carts: shoppingCarts });
@@ -215,6 +307,7 @@ Page({
     })
   },
   placeOrder: function () {
+    let _self = this;
     if (this.data.productNumber != 0) {
       const serialNumber = util.getSerialNumber();
       let ods = [];

@@ -1,32 +1,27 @@
-// pages/myInfo/myInfo.js
+// pages/userInfo/userInfo.js
+const app = getApp();
+let util = require("../../utils/util.js");
+let  _self;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    nickName:'',
-    headUrl:'',
     userInfo:{},
-    menuitems: [
-      { text: '个人信息', url: '/pages/userInfo/userInfo', icon: '../../images/bar/me-1.jpg', tips: '' },
-      { text: '历史订单', url: '/pages/orderHistory/orderHistory', icon: '../../images/bar/me-1.jpg', tips: '' },
-      { text: '意见反馈', url: '/pages/feedback/feedback', icon: '../../images/bar/me-1.jpg', tips: '' }
-    ]
+    basePath: app.globalData.api,
+    vip:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const app = getApp()
+    let user = app.globalData.userInfo;
+    let vip = app.globalData.vip;
     this.setData({
-      userInfo:app.globalData.userInfo
+      userInfo:user,vip:vip
     })
-    // this.setData({
-    //   nickName:wx.getStorageSync("userName"),
-    //   headUrl:wx.getStorageSync("iconPath")
-    // })
   },
 
   /**
@@ -76,10 +71,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  closeHide:function(e){
-    this.setData({
-      ismask: 'none'
-    });
   }
 })

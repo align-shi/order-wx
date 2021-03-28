@@ -1,5 +1,5 @@
 <view class="detail_title">
-  <text>{{product.type_name}}，{{product.name}}</text>
+  <text>{{product.typeName}}，{{product.name}}</text>
 </view>
 <view class="detail_image">
   <block wx:if="{{otherImageUrls.length!=0}}">

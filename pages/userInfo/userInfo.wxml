@@ -1,0 +1,17 @@
+<view class="container">
+ 
+ <view class="info-box">
+   <view style="text-align: center;margin-bottom:10%;">
+     <image class="avatar-img" src="{{userInfo.avatarUrl}}" />
+   </view>
+ 
+   <text>昵称： {{userInfo.nickName}}</text>
+   <text wx:if="{{userInfo.gender == 1}}">性别： 男</text>
+   <text wx:if="{{userInfo.gender != 1}}">性别： 女</text>
+   <text>国家： {{userInfo.country}}</text>
+   <text>省份： {{userInfo.province}}</text>
+   <text wx:if="{{vip == 1}}">vip： 是</text>
+   <text wx:if="{{vip == 0}}">vip： 否</text>
+ </view>
+
+</view>
